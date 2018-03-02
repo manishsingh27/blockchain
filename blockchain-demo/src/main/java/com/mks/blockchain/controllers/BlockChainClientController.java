@@ -42,5 +42,29 @@ public class BlockChainClientController {
 
 		return new BlockChainResponse(blockChain.getChain());
 	}
+	
+	@RequestMapping("/verifyblockchain")
+	public Boolean verifychain() {
+		
+		Boolean isChainValid = true;
+		Block currentBlock; 
+		Block previousBlock;
+		List<Block> blockchain = blockChain.getChain();
+		
+		for(int i=1; i < blockchain.size(); i++) {
+			currentBlock = blockchain.get(i);
+			previousBlock = blockchain.get(i-1);
+			
+			if(!currentBlock.getcurrentBlockHash().equals(currentBlock.calculateHash()) ){
+				isChainValid = false;
+			}
+			
+			if(!previousBlock.getcurrentBlockHash().equals(currentBlock.getPreviousBlockHash()) ) {
+				isChainValid = false;
+			}
+		}
+						
+		return isChainValid;
+	}
 
 }

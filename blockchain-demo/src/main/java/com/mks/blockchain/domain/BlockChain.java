@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mks.blockchain.helper.Utilities;
+
 //responsible for managing the chain and store transactions 
 //And add new blocks to the chain
 
@@ -38,7 +40,9 @@ public class BlockChain {
 
 		block.setBlockNumber(blockChain.size() + 1);
 
-		block.setCurrentBlockHash(block.calculateHash());
+		//mine the block
+		block.mineCurrentBlock(Utilities.difficulty);
+		
 		this.blockChain.add(block);
 
 		return block;

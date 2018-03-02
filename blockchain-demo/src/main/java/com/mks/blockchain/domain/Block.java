@@ -5,36 +5,54 @@ import java.util.Date;
 import java.util.List;
 
 import com.mks.blockchain.helper.CryptoUtil;
-
+import com.mks.blockchain.helper.Utilities;
 
 public class Block implements Serializable {
 
 	private static final long serialVersionUID = -1875593299885398418L;
-	
+
 	private long blockNumber;
 	public String currentBlockHash;
-	public String previousBlockHash; 
+	public String previousBlockHash;
 	private long timeStamp;
 	private int nonce;
-    private List<Transaction> transactions;
+	private List<Transaction> transactions;
 
+	public Block() {
+	}
 
-    public Block() {}
-	
-	public Block(String previousHash, List<Transaction> transactions ) {
+	public Block(String previousHash, List<Transaction> transactions) {
 		this.transactions = transactions;
 		this.previousBlockHash = previousHash;
 		this.timeStamp = new Date().getTime();
+		this.currentBlockHash = calculateHash();
 	}
-	
-	public Block(List<Transaction> transactions ) {
+
+	public Block(List<Transaction> transactions) {
 		this.transactions = transactions;
 		this.timeStamp = new Date().getTime();
+		this.currentBlockHash = calculateHash();
 	}
-	//Calculate new hash based on blocks contents
+
 	public String calculateHash() {
-		String calculatedhash = CryptoUtil.hashBlock(this);
+		String calculatedhash = CryptoUtil.applySha256(this.blockNumber + this.previousBlockHash
+				+ Long.toString(this.timeStamp) + Integer.toString(this.nonce) + this.transactions.toString());
 		return calculatedhash;
+	}
+
+	public void mineCurrentBlock(int noOfZero) {
+
+		String startHashWithValue = Utilities.getZerosBasedOnInput(noOfZero);
+
+		// hashing algorithm is re-run until its figure out which Nonce to be
+		// set to get the noOfZero zero.
+		
+		while (currentBlockHash!= null && 
+				!currentBlockHash.substring(0, noOfZero).equals(startHashWithValue)) {
+			nonce++;
+			currentBlockHash = calculateHash();
+		}
+		System.out.println("Block has been mined, nonce is  : " + nonce);
 	}
 
 	public long getBlockNumber() {
@@ -61,7 +79,6 @@ public class Block implements Serializable {
 		this.previousBlockHash = previousHash;
 	}
 
-
 	public long getTimeStamp() {
 		return timeStamp;
 	}
@@ -85,6 +102,5 @@ public class Block implements Serializable {
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
 	}
-			
 
 }
