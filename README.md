@@ -1,4 +1,4 @@
-# blockchain
+# This demo application is based on Spring and Spring boot
 http://localhost:8080/blockchain - This is a Get request to get the blockchain
 
 http://localhost:8080/addblock  - This is a post request to add a block in the block chain. Below is the samle transaction and can be sent in the request body.
