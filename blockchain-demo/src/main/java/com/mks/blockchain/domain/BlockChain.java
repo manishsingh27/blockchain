@@ -23,12 +23,11 @@ public class BlockChain {
 
 		this.blockChain = Collections.synchronizedList(new LinkedList<>());
 
-		Transaction genesisBlockData = new Transaction("First sender", "First recipient", 101);
+		//CryptoTransaction genesisBlockData = new CryptoTransaction("First sender", "First recipient", 101);
 
-		List<Transaction> currentTransactions = new LinkedList<>();
-		currentTransactions.add(genesisBlockData);
+		//currentTransactions.add(genesisBlockData);
 
-		addBlockToTheChain(new Block("0", currentTransactions));
+		//addBlockToTheChain(new Block("0", currentTransactions)); 
 	}
 
 	public Block addBlockToTheChain(Block block) { 

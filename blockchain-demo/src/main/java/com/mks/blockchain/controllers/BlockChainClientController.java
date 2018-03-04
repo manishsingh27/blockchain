@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mks.blockchain.domain.Block;
 import com.mks.blockchain.domain.BlockChain;
+import com.mks.blockchain.domain.CryptoTransaction;
 import com.mks.blockchain.domain.Transaction;
 import com.mks.blockchain.response.BlockChainResponse;
 
@@ -29,11 +30,11 @@ public class BlockChainClientController {
 		return new BlockChainResponse(blockChain.getChain());
 	}
 
-	@RequestMapping(value = "/addblock", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/addblock", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public BlockChainResponse addblock(@RequestBody Transaction transaction) {
+	public BlockChainResponse addblock(@RequestBody CryptoTransaction transaction) {
 				
-		List<Transaction> currentTransactions = new LinkedList<>();
+		List<CryptoTransaction> currentTransactions = new LinkedList<>();
 		currentTransactions.add(transaction);
 		
 		Block block = new Block(currentTransactions);
@@ -41,7 +42,7 @@ public class BlockChainClientController {
 		blockChain.addBlockToTheChain(block);
 
 		return new BlockChainResponse(blockChain.getChain());
-	}
+	}*/
 	
 	@RequestMapping("/verifyblockchain")
 	public Boolean verifychain() {
